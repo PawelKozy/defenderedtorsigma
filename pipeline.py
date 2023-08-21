@@ -1,4 +1,3 @@
-root@kozi-VirtualBox:/usr/local/lib/python3.10/dist-packages/sigma/pipelines/microsoft365defender# cat microsoft365defender.py 
 from typing import Union, Optional, Iterable
 from collections import defaultdict
 from sigma.exceptions import SigmaTransformationError
@@ -218,11 +217,11 @@ query_table_field_mappings = {
         'DestinationPort': 'RemotePort',
         # 'DestinationPortName': ?,
     },
-	    'DeviceNetworkEvents| extend custom = todynamic(additionalFields) | extend host=tostring(custom.cs-host), uri=tostring(custom.uri), useragent=tostring(custom.user_agent), method=tostring(custom.cs-method) ': {  # network_connection, proxy
-		'c-useragent': 'useragent',
-		'cs-method': 'method',
-		'c-uri': 'uri',
-		'cs-host': 'host',
+    'DeviceNetworkEvents | extend custom = todynamic(additionalFields) | extend host=tostring(custom.cs-host), uri=tostring(custom.uri), useragent=tostring(custom.user_agent), method=tostring(custom.cs-method) ': {  # network_connection, proxy
+	'c-useragent': 'useragent',
+	'cs-method': 'method',
+	'c-uri': 'uri',
+	'cs-host': 'host',
     },
     "DeviceRegistryEvents": {
         # registry_*, Sysmon EventID 12 (create/delete), 13 (value set), 14 (key/value rename) -> DeviceRegistryEvents table,
@@ -356,8 +355,7 @@ table_to_category_mappings = {
     'DeviceImageLoadEvents': ['image_load'],
     'DeviceFileEvents': ['file_access', 'file_change', 'file_delete', 'file_event', 'file_rename'],
     'DeviceRegistryEvents': ['registry_add', 'registry_delete', 'registry_event', 'registry_set'],
-    'DeviceNetworkEvents': ['network_connection'],
-	'DeviceNetworkEvents': ['proxy']
+    'DeviceNetworkEvents': ['network_connection', 'proxy']
 }
 ## rule categories -> RuleConditions
 category_to_conditions_mappings = {
