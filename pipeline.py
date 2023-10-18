@@ -217,10 +217,11 @@ query_table_field_mappings = {
         'DestinationPort': 'RemotePort',
         # 'DestinationPortName': ?,
     },
-    'DeviceNetworkEvents | extend custom = todynamic(additionalFields) | extend host=tostring(custom.cs-host), uri=tostring(custom.uri), useragent=tostring(custom.user_agent), method=tostring(custom.cs-method) ': {  # network_connection, proxy
+    'DeviceNetworkEvents| extend custom = todynamic(additionalFields) | extend host=tostring(custom.host), uri=tostring(custom.uri), useragent=tostring(custom.user_agent), method=tostring(custom.method)': {  # network_connection, proxy
 	'c-useragent': 'useragent',
 	'cs-method': 'method',
 	'c-uri': 'uri',
+	'c-uri-extension': 'uri',
 	'cs-host': 'host',
     },
     "DeviceRegistryEvents": {
@@ -330,6 +331,7 @@ valid_fields_per_table = {
                              'InitiatingProcessParentFileName', 'InitiatingProcessParentCreationTime',
                              'InitiatingProcessIntegrityLevel', 'InitiatingProcessTokenElevation', 'ReportId',
                              'AppGuardContainerId'],
+    'DeviceNetworkEvents| extend custom = todynamic(additionalFields) | extend host=tostring(custom.cs-host), uri=tostring(custom.uri), useragent=tostring(custom.user_agent), method=tostring(custom.cs-method)': ['host', 'uri', 'useragent', 'method'],
     'DeviceNetworkEvents': ['Timestamp', 'DeviceId', 'DeviceName', 'ActionType', 'RemoteIP', 'RemotePort', 'RemoteUrl',
                             'LocalIP', 'LocalPort', 'Protocol', 'LocalIPType', 'RemoteIPType', 'InitiatingProcessSHA1',
                             'InitiatingProcessSHA256', 'InitiatingProcessMD5', 'InitiatingProcessFileName',
@@ -355,7 +357,8 @@ table_to_category_mappings = {
     'DeviceImageLoadEvents': ['image_load'],
     'DeviceFileEvents': ['file_access', 'file_change', 'file_delete', 'file_event', 'file_rename'],
     'DeviceRegistryEvents': ['registry_add', 'registry_delete', 'registry_event', 'registry_set'],
-    'DeviceNetworkEvents': ['network_connection', 'proxy']
+    'DeviceNetworkEvents': ['network_connection'],
+    'DeviceNetworkEvents| extend custom = todynamic(additionalFields) | extend host=tostring(custom.cs-host), uri=tostring(custom.uri), useragent=tostring(custom.user_agent), method=tostring(custom.cs-method)': ['proxy']
 }
 ## rule categories -> RuleConditions
 category_to_conditions_mappings = {
